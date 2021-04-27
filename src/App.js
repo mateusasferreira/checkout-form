@@ -1,8 +1,8 @@
 import "./App.css";
-import CheckoutForm from "./components/checkout/checkout-form";
+import {CheckoutForm} from "./components/checkout/checkout-form";
 import { Container, Typography } from "@material-ui/core";
 import "fontsource-roboto";
-
+import {FormContextProvider} from './contexts/formContext'
 
 function App() {
   return (
@@ -11,7 +11,9 @@ function App() {
         <Typography variant="h3" component="h2">
           Sign-up 
         </Typography>
-        <CheckoutForm/>
+        <FormContextProvider>
+          <CheckoutForm/>
+        </FormContextProvider>        
       </Container>
     </div>
   );

@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
 import "./style.css";
+import { useForm } from "../../contexts/formContext";
+import {useValidation} from '../../contexts/validationContext'
 
-function SignUpForm(props) {
- 
+function SignUpForm() {
+  const {passwordValidation} = useValidation()
+  
+  const {onFormSubmit} = useForm()
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [discounts, setDiscounts] = useState(true);
@@ -19,7 +24,7 @@ function SignUpForm(props) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        props.onSubmit({ email, password, discounts, features });
+        onFormSubmit({ email, password, discounts, features });
       }}
     >
       
@@ -37,9 +42,8 @@ function SignUpForm(props) {
       <TextField
         error={errors.password.unvalid}
         helperText={errors.password.message}
-        onBlur={() => {
-          const validation = props.validation.password(password);
-          setErrors({ password: validation });
+        onBlur={() => {          
+          setErrors({ password: passwordValidation(password) });
         }}
         value={password}
         onChange={(e) => {

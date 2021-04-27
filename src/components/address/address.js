@@ -1,13 +1,10 @@
-import {
-  TextField,
-  Button,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
+import {TextField, Button, InputLabel, Select, MenuItem} from "@material-ui/core";
 import React, { useState } from "react";
+import { useForm } from "../../contexts/formContext";
 
-function AddressRegistration(props) {
+function AddressRegistration() {
+  const {onFormSubmit, handleBack} = useForm()
+  
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [type, setType] = useState("");
@@ -18,7 +15,7 @@ function AddressRegistration(props) {
   return (
     <form action="submit" onSubmit={(e) => {
       e.preventDefault()
-      props.onSubmit({street, number, type, city, district, zip})}}>
+      onFormSubmit({street, number, type, city, district, zip})}}>
       <TextField
         value={street}
         type="text"
@@ -89,7 +86,7 @@ function AddressRegistration(props) {
         fullWidth
         required
       ></TextField>
-      <Button onClick={props.handleBack} color="primary" variant="contained">
+      <Button onClick={handleBack} color="primary" variant="contained">
         Back
       </Button>
       <Button type="submit" color="primary" variant="contained">

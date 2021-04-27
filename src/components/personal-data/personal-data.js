@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
+import { useForm } from "../../contexts/formContext";
 
-function PersonalData(props) {
-  const [name, setName] = useState("");
+function PersonalData() {
+  const {onFormSubmit, handleBack} = useForm()
+  const [name, setName] = useState("")
 
   return (
     <form action="submit"
     onSubmit={(e) => {
         e.preventDefault()
-        props.onSubmit({name})}}
+        onFormSubmit({name})}}
     >
       <TextField
         value={name}
@@ -21,7 +23,7 @@ function PersonalData(props) {
         fullWidth
         required
       ></TextField>
-      <Button onClick={props.handleBack} color="primary" variant="contained">
+      <Button onClick={handleBack} color="primary" variant="contained">
         Back
       </Button>
        <Button type="submit" color="primary" variant="contained">
