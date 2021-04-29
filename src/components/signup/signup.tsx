@@ -4,15 +4,16 @@ import "./style.css";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
 
+
 function SignUpForm() {
   const {passwordValidation} = useValidation()
   
   const {onFormSubmit} = useForm()
   
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [discounts, setDiscounts] = useState(true);
-  const [features, setFeatures] = useState(true);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [discounts, setDiscounts] = useState<boolean>(true);
+  const [features, setFeatures] = useState<boolean>(true);
   const [errors, setErrors] = useState({
     password: {
       unvalid: false,

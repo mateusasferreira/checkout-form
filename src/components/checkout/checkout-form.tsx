@@ -1,5 +1,5 @@
 import { Stepper, Step, StepLabel } from "@material-ui/core";
-import { useForm } from "../../contexts/formContext.js";
+import { useForm } from "../../contexts/formContext";
 import { steps } from "../../steps-array/steps";
 import { ValidationContextProvider } from "../../contexts/validationContext";
 export function CheckoutForm() {

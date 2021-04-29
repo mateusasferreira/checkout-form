@@ -2,15 +2,19 @@ import {TextField, Button, InputLabel, Select, MenuItem} from "@material-ui/core
 import React, { useState } from "react";
 import { useForm } from "../../contexts/formContext";
 
+
+ 
+
+
 function AddressRegistration() {
-  const {onFormSubmit, handleBack} = useForm()
+  const {onFormSubmit, previousStep} = useForm()
   
-  const [street, setStreet] = useState("");
-  const [number, setNumber] = useState("");
-  const [type, setType] = useState("");
-  const [city, setCity] = useState("");
-  const [district, setDistrict] = useState("");
-  const [zip, setZip] = useState("");
+  const [street, setStreet] = useState<string>("");
+  const [number, setNumber] = useState<string>("");
+  const [type, setType] = useState<unknown>("");
+  const [city, setCity] = useState<string>("");
+  const [district, setDistrict] = useState<string>("");
+  const [zip, setZip] = useState<string>("");
 
   return (
     <form action="submit" onSubmit={(e) => {
@@ -30,7 +34,7 @@ function AddressRegistration() {
       ></TextField>
       <TextField
         value={number}
-        type="number"
+        type="text"
         onChange={(e) => {
           setNumber(e.target.value);
         }}
@@ -43,6 +47,7 @@ function AddressRegistration() {
       <Select
         labelId="type-of-place"
         id="type"
+        
         value={type}
         onChange={(e) => {
           setType(e.target.value);
@@ -86,7 +91,7 @@ function AddressRegistration() {
         fullWidth
         required
       ></TextField>
-      <Button onClick={handleBack} color="primary" variant="contained">
+      <Button onClick={previousStep} color="primary" variant="contained">
         Back
       </Button>
       <Button type="submit" color="primary" variant="contained">

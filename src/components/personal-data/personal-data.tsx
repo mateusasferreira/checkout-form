@@ -3,8 +3,8 @@ import { TextField, Button } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
 
 function PersonalData() {
-  const {onFormSubmit, handleBack} = useForm()
-  const [name, setName] = useState("")
+  const {onFormSubmit, previousStep} = useForm()
+  const [name, setName] = useState<string>("")
 
   return (
     <form action="submit"
@@ -23,7 +23,7 @@ function PersonalData() {
         fullWidth
         required
       ></TextField>
-      <Button onClick={handleBack} color="primary" variant="contained">
+      <Button onClick={previousStep} color="primary" variant="contained">
         Back
       </Button>
        <Button type="submit" color="primary" variant="contained">
