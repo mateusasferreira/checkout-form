@@ -17,6 +17,9 @@ export function CheckoutForm() {
         <Step>
           <StepLabel>Address</StepLabel>
         </Step>
+        <Step>
+          <StepLabel>Confirmation</StepLabel>
+        </Step>
       </Stepper>
       {steps[currentStep]}
     </ValidationContextProvider>
