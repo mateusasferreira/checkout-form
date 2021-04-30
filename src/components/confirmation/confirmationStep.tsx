@@ -6,7 +6,8 @@ import { useForm } from "../../contexts/formContext";
 function ConfirmationStep() {
   const [readMode, setReadMode] = useState<boolean>(true);
   const [variant, setVariant] = useState("standard");
-  const { userData } = useForm();
+  
+  const { userData, onFormSubmit } = useForm();
 
   const [name, setName] = useState<string>(userData.name);
   const [id, setId] = useState<number | null>(userData.id);
@@ -27,9 +28,8 @@ function ConfirmationStep() {
       variant="outlined" 
       color="primary" 
       onClick={toggleReadMode}
-      //disabled={!readMode}
       >
-        {readMode ? 'Edit Informations' : 'Done' }
+        {readMode ? 'Edit Data' : 'Done' }
       </Button>
       
       <TextField
@@ -70,6 +70,7 @@ function ConfirmationStep() {
           setStreet(e.target.value);
         }}
         label="Street"
+        focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
@@ -82,6 +83,7 @@ function ConfirmationStep() {
           setNumber(e.target.value);
         }}
         label="Number"
+        focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
@@ -94,6 +96,7 @@ function ConfirmationStep() {
           setCity(e.target.value);
         }}
         label="City"
+        focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
@@ -106,6 +109,7 @@ function ConfirmationStep() {
           setDistrict(e.target.value);
         }}
         label="District"
+        focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
@@ -118,6 +122,7 @@ function ConfirmationStep() {
           setZip(e.target.value);
         }}
         label="Zip Code"
+        focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
@@ -127,7 +132,10 @@ function ConfirmationStep() {
       <Button 
       variant="contained"
       color="primary" 
-      onClick={toggleReadMode}
+      onClick={(e)=> {
+        e.preventDefault();
+        onFormSubmit({name, id, street, number, city, district, zip})
+      }}
       >
         Confirm and Submit
       </Button>

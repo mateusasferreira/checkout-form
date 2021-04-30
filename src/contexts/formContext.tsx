@@ -7,9 +7,9 @@ type User = {
     features: boolean;
     discounts: boolean;
     name: string;
-    id: number;
+    id: number | null;
     street: string;
-    number: string;
+    number: string; 
     type: unknown;
     city: string;
     district: string;
@@ -47,7 +47,7 @@ export function FormContextProvider({children}: FormContextProviderProps) {
     }
 
     function nextStep(){
-    if(currentStep === steps.length) return
+    //if(currentStep === steps.length) return
     setCurrentStep(currentStep + 1)
     }
     

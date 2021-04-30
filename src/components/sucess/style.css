@@ -1,0 +1,12 @@
+.sucess { 
+    text-align: center;
+}
+
+.sucess img {
+    width: 20%;
+    height: 20%;
+}
+
+.sucess h1, h3 {
+    color: #242424;
+}
