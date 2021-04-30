@@ -8,9 +8,6 @@ function App() {
   return (
     <div className="App">
       <Container maxWidth="sm">
-        <Typography variant="h3" component="h2">
-          Sign-up 
-        </Typography>
         <FormContextProvider>
           <CheckoutForm/>
         </FormContextProvider>        

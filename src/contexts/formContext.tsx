@@ -22,6 +22,7 @@ type FormContextData = {
     onFormSubmit: (newData: Partial<User> ) => void;
     nextStep: () => void;
     previousStep: () => void;
+    stepperDisplay: string;
 }
 
 type FormContextProviderProps = {
@@ -32,12 +33,14 @@ export const FormContext = createContext({} as FormContextData)
 
 
 export function FormContextProvider({children}: FormContextProviderProps) {
+    const [stepperDisplay, setStepperDisplay] = useState('block')
     const [userData, setUserData] = useState<User>({} as User)
     const [currentStep, setCurrentStep] = useState(0)
 
     useEffect(()=> {
-        if(currentStep === steps.length){
+        if(currentStep === steps.length - 1){
           console.log(userData)
+          setStepperDisplay('none')
         }
       })    
       
@@ -59,6 +62,7 @@ export function FormContextProvider({children}: FormContextProviderProps) {
         <FormContext.Provider value={
             {userData,
             currentStep,
+            stepperDisplay,
             onFormSubmit,
             nextStep,
             previousStep}
