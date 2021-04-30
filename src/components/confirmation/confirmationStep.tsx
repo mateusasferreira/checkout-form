@@ -5,7 +5,7 @@ import { useForm } from "../../contexts/formContext";
 
 function ConfirmationStep() {
   const [readMode, setReadMode] = useState<boolean>(true);
-    const [variant, setVariant] = useState('standard')
+  const [variant, setVariant] = useState("standard");
   const { userData } = useForm();
 
   const [name, setName] = useState<string>(userData.name);
@@ -16,13 +16,21 @@ function ConfirmationStep() {
   const [number, setNumber] = useState<string>(userData.number);
   const [zip, setZip] = useState<string>(userData.zip);
 
-  function toogleReadMode() {
-    setReadMode(false);
-    setVariant('outlined')
+  function toggleReadMode() {
+    setReadMode(!readMode);
+    setVariant("outlined");
   }
 
   return (
     <form action="submit">
+      <Button 
+      variant="outlined" 
+      color="primary" 
+      onClick={toggleReadMode}
+      //disabled={!readMode}
+      >
+        {readMode ? 'Edit Informations' : 'Done' }
+      </Button>
       
       <TextField
         id="name"
@@ -31,25 +39,25 @@ function ConfirmationStep() {
           setName(e.target.value);
         }}
         label="Name"
+        focused={!readMode}
         defaultValue={name}
         InputProps={{
           readOnly: readMode,
-          
         }}
-        
         fullWidth
       />
       <TextField
         id="id"
         value={id}
         onChange={(e) => {
-            if (e.target.value.length > 0) {
-                const idNumber = parseInt(e.target.value)
-                setId(idNumber)
-            } else setId(null)    
+          if (e.target.value.length > 0) {
+            const idNumber = parseInt(e.target.value);
+            setId(idNumber);
+          } else setId(null);
         }}
         label="ID Number"
         type="number"
+        focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
@@ -71,7 +79,7 @@ function ConfirmationStep() {
         id="number"
         value={number}
         onChange={(e) => {
-            setNumber(e.target.value)
+          setNumber(e.target.value);
         }}
         label="Number"
         InputProps={{
@@ -115,8 +123,13 @@ function ConfirmationStep() {
         }}
         fullWidth
       />
-      <Button variant="outlined" color="primary" onClick={toogleReadMode}>
-        Primary
+      
+      <Button 
+      variant="contained"
+      color="primary" 
+      onClick={toggleReadMode}
+      >
+        Confirm and Submit
       </Button>
     </form>
   );
