@@ -3,7 +3,14 @@ import React,{createContext, ReactNode, useContext, useState} from 'react'
 type Validation = {
     passwordValidation: (input: string) => {unvalid: boolean, message: string},
     emailValidation: (input: string) => {unvalid: boolean, message: string},
-    zipValidation: (input: string) => Promise<{unvalid: boolean, message: string}>
+    zipValidation: (input: string) => Promise<{
+        validity: {unvalid: boolean, message: string},
+        locationData: {
+            city: string
+            street: string
+            district: string
+        } | null
+    }>
 }
 
 
@@ -32,6 +39,7 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
     
     async function zipValidation(input: string) {
         try {
+            const zip = input.replace(/\D/g, '')
             const options: RequestInit = {
                 method: 'GET',
                 mode: 'cors',
@@ -39,18 +47,29 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
                     'Content-Type': 'application/json'                
                   },
             }
-            const response = await fetch(`https://viacep.com.br/ws/${input}/json`, options)
+            const response = await fetch(`https://viacep.com.br/ws/${zip}/json`, options)
             const data:any = await response.json()
-            console.log(response)
-            console.log(data)
             if(data.erro) {
-                return {unvalid: true, message: 'wrong zip code'}
+                return {
+                    validity: {unvalid: true, message: 'Inexisting ZIP Code (for testing, try: 01001-001)'},
+                    locationData: null
+                }
             } 
-            return {unvalid: false, message: ''}
+            return {
+                validity: {unvalid: false, message: ''},
+                locationData: {
+                    city: data.localidade,
+                    street: data.logradouro,
+                    district: data.bairro
+                }
+            }
 
         } catch (err) {
             console.log(err)
-            return {unvalid: true, message: 'invalid zip code format'}
+            return {
+                validity: {unvalid: true, message: 'Invalid ZIP code format (for testing, try: 01001-001)'},
+                locationData: null
+            }
         }           
     }
            

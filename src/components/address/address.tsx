@@ -29,6 +29,28 @@ function AddressRegistration() {
       e.preventDefault()
       onFormSubmit({street, number, type, city, district, zip})}}>
       <TextField
+        value={zip}
+        error={errors.zip.unvalid}
+        helperText={errors.zip.message}
+        type="text"
+        onChange={(e) => {
+          setZip(e.target.value);
+        }}
+        onBlur={async () => {
+          const response = await zipValidation(zip)
+          setErrors({zip:response.validity}) 
+          if(response.locationData) {
+            setCity(response.locationData.city)
+            setStreet(response.locationData.street)
+            setDistrict(response.locationData.district)
+          }
+        }}
+        variant="outlined"
+        label="Zip Code"
+        margin="normal"
+        required
+      ></TextField>
+      <TextField
         value={street}
         type="text"
         onChange={(e) => {
@@ -36,8 +58,7 @@ function AddressRegistration() {
         }}
         variant="outlined"
         label="Street"
-        margin="normal"
-        fullWidth
+        margin="normal"        
         required
       ></TextField>
       <TextField
@@ -55,13 +76,12 @@ function AddressRegistration() {
       <Select
         labelId="type-of-place"
         id="type"
-        
         value={type}
         onChange={(e) => {
           setType(e.target.value);
         }}
       >
-        <MenuItem value="residential">Residential</MenuItem>
+        <MenuItem value="residential" selected>Residential</MenuItem>
         <MenuItem value="comercial">Comercial</MenuItem>
       </Select>
       <TextField
@@ -87,24 +107,7 @@ function AddressRegistration() {
         margin="normal"
         required
       ></TextField>
-      <TextField
-        value={zip}
-        error={errors.zip.unvalid}
-        helperText={errors.zip.message}
-        type="number"
-        onChange={(e) => {
-          setZip(e.target.value);
-        }}
-        onBlur={async () => {
-          const response = await zipValidation(zip)
-          setErrors({zip:response})  
-        }}
-        variant="outlined"
-        label="Zip Code"
-        margin="normal"
-        fullWidth
-        required
-      ></TextField>
+      
       <Button onClick={previousStep} color="primary" variant="contained">
         Back
       </Button>

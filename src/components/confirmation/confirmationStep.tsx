@@ -4,10 +4,10 @@ import { TextField, Button } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
 
 function ConfirmationStep() {
-  const [readMode, setReadMode] = useState<boolean>(true);
-  const [variant, setVariant] = useState("standard");
-  
   const { userData, onFormSubmit } = useForm();
+
+
+  const [readMode, setReadMode] = useState<boolean>(true);
 
   const [name, setName] = useState<string>(userData.name);
   const [id, setId] = useState<number | null>(userData.id);
@@ -19,7 +19,6 @@ function ConfirmationStep() {
 
   function toggleReadMode() {
     setReadMode(!readMode);
-    setVariant("outlined");
   }
 
   return (
