@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
-import "./style.css";
+//import "./style.css";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
+import userEvent from "@testing-library/user-event";
 
 
 function SignUpForm() {
@@ -17,7 +18,7 @@ function SignUpForm() {
   const [errors, setErrors] = useState({
     password: {
       unvalid: false,
-      message: 'Disclaimer: this is just a prototype for testing, do not provide real passwords. Try something like \'Testing123\'.',
+      message: '',
     },
     email: {
       unvalid: false,
@@ -38,6 +39,7 @@ function SignUpForm() {
         value={email}
         error={errors.email.unvalid}
         helperText={errors.email.message}
+        placeholder='user@email.com'
         onChange={(e) => {
           setEmail(e.target.value);
         }}
@@ -52,9 +54,14 @@ function SignUpForm() {
       ></TextField>
       <TextField
         error={errors.password.unvalid}
+        type="password"
         helperText={errors.password.message}
+        placeholder='e.g. Testing123'
         onBlur={() => {          
           setErrors(errors => ({...errors, password: passwordValidation(password)}));
+        }}
+        onFocus={()=>{
+          setErrors(errors => ({...errors, password:{unvalid:false, message: 'Disclaimer: this is just a prototype for testing, do not provide real passwords. Try something like \'Testing123\'.'}}))
         }}
         value={password}
         onChange={(e) => {

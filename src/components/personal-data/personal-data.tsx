@@ -9,6 +9,7 @@ function PersonalData() {
 
   return (
     <form
+    className="signInForm"
       action="submit"
       onSubmit={(e) => {
         e.preventDefault();
@@ -20,6 +21,7 @@ function PersonalData() {
         onChange={(e) => {
           setName(e.target.value);
         }}
+        placeholder='Name Surname'
         variant="outlined"
         label="Full Name"
         margin="normal"

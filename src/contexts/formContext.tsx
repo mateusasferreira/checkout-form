@@ -10,7 +10,6 @@ type User = {
     id: number | null;
     street: string;
     number: string; 
-    type: unknown;
     city: string;
     district: string;
     zip: string 

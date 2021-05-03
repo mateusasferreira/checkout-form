@@ -54,9 +54,9 @@ function ConfirmationStep() {
           setName(e.target.value);
         }}
         label="Name"
-        margin="normal"
         focused={!readMode}
         defaultValue={name}
+        style={styles.nameInput}
         InputProps={{
           readOnly: readMode,
         }}
@@ -73,11 +73,11 @@ function ConfirmationStep() {
         }}
         label="ID Number"
         type="number"
-        margin="normal"
         focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
+        style={styles.normalInput}
         fullWidth
       />
       <TextField
@@ -100,10 +100,10 @@ function ConfirmationStep() {
         }}
         label="Zip Code"
         focused={!readMode}
-        margin="normal"
         InputProps={{
           readOnly: readMode,
         }}
+        style={styles.normalInput}
         fullWidth
       />
       <TextField
@@ -114,10 +114,10 @@ function ConfirmationStep() {
         }}
         label="Street"
         focused={!readMode}
-        margin="normal"
         InputProps={{
           readOnly: readMode,
         }}
+        style={styles.normalInput}
         fullWidth
       />
       <TextField
@@ -127,8 +127,8 @@ function ConfirmationStep() {
           setNumber(e.target.value);
         }}
         label="Number"
-        margin="normal"
         focused={!readMode}
+        style={styles.normalInput}
         InputProps={{
           readOnly: readMode,
         }}
@@ -140,11 +140,12 @@ function ConfirmationStep() {
           setCity(e.target.value);
         }}
         label="City"
-        margin="normal"
         focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
+        style={styles.normalInput}
+
         fullWidth
       />
       <TextField
@@ -155,10 +156,10 @@ function ConfirmationStep() {
         }}
         label="District"
         focused={!readMode}
-        margin="normal"
         InputProps={{
           readOnly: readMode,
         }}
+        style={styles.normalInput}
         fullWidth
       />      
       
@@ -172,6 +173,20 @@ function ConfirmationStep() {
       </Button>
     </form>
   );
+}
+
+const styles = {
+  nameInput: {
+    marginBottom: '1rem',
+    marginTop: '1rem',
+    width: '50%',
+    display: 'block'
+  },
+  normalInput: {
+    marginBottom: '1rem',
+    width: '50%'
+  }
+
 }
 
 export default ConfirmationStep;
