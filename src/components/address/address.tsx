@@ -1,20 +1,27 @@
 import {TextField, Button, InputLabel, Select, MenuItem} from "@material-ui/core";
 import React, { useState } from "react";
 import { useForm } from "../../contexts/formContext";
-
+import {useValidation} from '../../contexts/validationContext'
 
  
 
 
 function AddressRegistration() {
   const {onFormSubmit, previousStep} = useForm()
-  
+    
   const [street, setStreet] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [type, setType] = useState<unknown>("");
   const [city, setCity] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
   const [zip, setZip] = useState<string>("");
+
+  const [errors, setErrors] = useState({
+    zip: {
+      unvalid: false, 
+      message: ''
+    }
+  })
 
   return (
     <form action="submit" onSubmit={(e) => {
@@ -81,6 +88,8 @@ function AddressRegistration() {
       ></TextField>
       <TextField
         value={zip}
+        error={errors.zip.unvalid}
+        helperText={errors.zip.message}
         type="number"
         onChange={(e) => {
           setZip(e.target.value);

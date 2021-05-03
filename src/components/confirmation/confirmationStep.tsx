@@ -39,6 +39,7 @@ function ConfirmationStep() {
           setName(e.target.value);
         }}
         label="Name"
+        margin="normal"
         focused={!readMode}
         defaultValue={name}
         InputProps={{
@@ -57,6 +58,7 @@ function ConfirmationStep() {
         }}
         label="ID Number"
         type="number"
+        margin="normal"
         focused={!readMode}
         InputProps={{
           readOnly: readMode,
@@ -71,6 +73,7 @@ function ConfirmationStep() {
         }}
         label="Street"
         focused={!readMode}
+        margin="normal"
         InputProps={{
           readOnly: readMode,
         }}
@@ -83,11 +86,11 @@ function ConfirmationStep() {
           setNumber(e.target.value);
         }}
         label="Number"
+        margin="normal"
         focused={!readMode}
         InputProps={{
           readOnly: readMode,
         }}
-        fullWidth
       />
       <TextField
         id="city"
@@ -96,6 +99,7 @@ function ConfirmationStep() {
           setCity(e.target.value);
         }}
         label="City"
+        margin="normal"
         focused={!readMode}
         InputProps={{
           readOnly: readMode,
@@ -110,6 +114,7 @@ function ConfirmationStep() {
         }}
         label="District"
         focused={!readMode}
+        margin="normal"
         InputProps={{
           readOnly: readMode,
         }}
@@ -123,6 +128,7 @@ function ConfirmationStep() {
         }}
         label="Zip Code"
         focused={!readMode}
+        margin="normal"
         InputProps={{
           readOnly: readMode,
         }}

@@ -6,7 +6,7 @@ import {useValidation} from '../../contexts/validationContext'
 
 
 function SignUpForm() {
-  const {passwordValidation} = useValidation()
+  const {passwordValidation, emailValidation} = useValidation()
   
   const {onFormSubmit} = useForm()
   
@@ -19,20 +19,30 @@ function SignUpForm() {
       unvalid: false,
       message: "",
     },
+    email: {
+      unvalid: false,
+      message: "",
+    },
   });
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        if (errors.password.unvalid || errors.email.unvalid) return 
         onFormSubmit({ email, password, discounts, features });
       }}
     >
       
       <TextField
         value={email}
+        error={errors.email.unvalid}
+        helperText={errors.email.message}
         onChange={(e) => {
           setEmail(e.target.value);
+        }}
+        onBlur={()=> {
+          setErrors(errors => ({...errors, email: emailValidation(email)}));
         }}
         variant="outlined"
         label="Email"
@@ -44,7 +54,7 @@ function SignUpForm() {
         error={errors.password.unvalid}
         helperText={errors.password.message}
         onBlur={() => {          
-          setErrors({ password: passwordValidation(password) });
+          setErrors(errors => ({...errors, password: passwordValidation(password)}));
         }}
         value={password}
         onChange={(e) => {
