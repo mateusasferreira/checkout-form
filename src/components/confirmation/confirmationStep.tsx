@@ -2,27 +2,43 @@ import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 
 import { useForm } from "../../contexts/formContext";
+import {useValidation} from '../../contexts/validationContext'
 
 function ConfirmationStep() {
   const { userData, onFormSubmit } = useForm();
 
+  const {zipValidation} = useValidation()
 
   const [readMode, setReadMode] = useState<boolean>(true);
 
   const [name, setName] = useState<string>(userData.name);
   const [id, setId] = useState<number | null>(userData.id);
   const [street, setStreet] = useState<string>(userData.street);
-  const [city, setCity] = useState<string>(userData.number);
+  const [city, setCity] = useState<string>(userData.city);
   const [district, setDistrict] = useState<string>(userData.district);
   const [number, setNumber] = useState<string>(userData.number);
   const [zip, setZip] = useState<string>(userData.zip);
+
+  const [errors, setErrors] = useState({
+    zip: {
+      unvalid: false, 
+      message: ''
+    }
+  })
+
 
   function toggleReadMode() {
     setReadMode(!readMode);
   }
 
   return (
-    <form action="submit">
+    <form action="submit"
+    onSubmit={(e)=> {
+      e.preventDefault();
+      if (errors.zip.unvalid) return
+      onFormSubmit({name, id, street, number, city, district, zip})
+    }}
+    >
       <Button 
       variant="outlined" 
       color="primary" 
@@ -59,6 +75,32 @@ function ConfirmationStep() {
         type="number"
         margin="normal"
         focused={!readMode}
+        InputProps={{
+          readOnly: readMode,
+        }}
+        fullWidth
+      />
+      <TextField
+        id="zip"
+        error={errors.zip.unvalid}
+        helperText={errors.zip.message}
+        value={zip}
+        type="text"
+        onChange={(e) => {
+          setZip(e.target.value);
+        }}
+        onBlur={async () => {
+          const response = await zipValidation(zip)
+          setErrors({zip:response.validity}) 
+          if(response.locationData) {
+            setCity(response.locationData.city)
+            setStreet(response.locationData.street)
+            setDistrict(response.locationData.district)
+          }
+        }}
+        label="Zip Code"
+        focused={!readMode}
+        margin="normal"
         InputProps={{
           readOnly: readMode,
         }}
@@ -118,29 +160,13 @@ function ConfirmationStep() {
           readOnly: readMode,
         }}
         fullWidth
-      />
-      <TextField
-        id="zip"
-        value={zip}
-        onChange={(e) => {
-          setZip(e.target.value);
-        }}
-        label="Zip Code"
-        focused={!readMode}
-        margin="normal"
-        InputProps={{
-          readOnly: readMode,
-        }}
-        fullWidth
-      />
+      />      
       
       <Button 
       variant="contained"
+      type="submit"
       color="primary" 
-      onClick={(e)=> {
-        e.preventDefault();
-        onFormSubmit({name, id, street, number, city, district, zip})
-      }}
+      
       >
         Confirm and Submit
       </Button>

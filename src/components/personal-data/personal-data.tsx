@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
 
 function PersonalData() {
-  const { onFormSubmit, previousStep } = useForm();
-  const [name, setName] = useState<string>("");
-  const [id, setId] = useState<number>();
+  const { onFormSubmit, userData } = useForm();
+  const [name, setName] = useState<string>(userData.name);
+  const [id, setId] = useState<number | null>(userData.id);
 
   return (
     <form
@@ -39,9 +39,6 @@ function PersonalData() {
         fullWidth
         required
       ></TextField>
-      <Button onClick={previousStep} color="primary" variant="contained">
-        Back
-      </Button>
       <Button type="submit" color="primary" variant="contained">
         Next
       </Button>

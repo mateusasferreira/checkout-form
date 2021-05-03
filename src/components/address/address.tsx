@@ -7,15 +7,15 @@ import {useValidation} from '../../contexts/validationContext'
 
 
 function AddressRegistration() {
-  const {onFormSubmit, previousStep} = useForm()
+  const {onFormSubmit, previousStep, userData} = useForm()
   const {zipValidation} = useValidation()
     
-  const [street, setStreet] = useState<string>("");
-  const [number, setNumber] = useState<string>("");
-  const [type, setType] = useState<unknown>("");
-  const [city, setCity] = useState<string>("");
-  const [district, setDistrict] = useState<string>("");
-  const [zip, setZip] = useState<string>("");
+  const [street, setStreet] = useState<string>(userData.street);
+  const [number, setNumber] = useState<string>(userData.number);
+  const [type, setType] = useState<unknown>(userData.type);
+  const [city, setCity] = useState<string>(userData.city);
+  const [district, setDistrict] = useState<string>(userData.district);
+  const [zip, setZip] = useState<string>(userData.zip);
 
   const [errors, setErrors] = useState({
     zip: {
@@ -27,6 +27,7 @@ function AddressRegistration() {
   return (
     <form action="submit" onSubmit={(e) => {
       e.preventDefault()
+      if (errors.zip.unvalid) return
       onFormSubmit({street, number, type, city, district, zip})}}>
       <TextField
         value={zip}

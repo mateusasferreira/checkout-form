@@ -17,7 +17,7 @@ function SignUpForm() {
   const [errors, setErrors] = useState({
     password: {
       unvalid: false,
-      message: "",
+      message: 'Disclaimer: this is just a prototype for testing, do not provide real passwords. Try something like \'Testing123\'.',
     },
     email: {
       unvalid: false,
