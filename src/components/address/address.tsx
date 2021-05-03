@@ -9,11 +9,11 @@ function AddressRegistration() {
   const {onFormSubmit, previousStep, userData} = useForm()
   const {zipValidation} = useValidation()
     
-  const [street, setStreet] = useState<string>(userData.street);
-  const [number, setNumber] = useState<string>(userData.number);
-  const [city, setCity] = useState<string>(userData.city);
-  const [district, setDistrict] = useState<string>(userData.district);
-  const [zip, setZip] = useState<string>(userData.zip);
+  const [street, setStreet] = useState<string>("");
+  const [number, setNumber] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [district, setDistrict] = useState<string>('');
+  const [zip, setZip] = useState<string>('');
 
   const [errors, setErrors] = useState({
     zip: {

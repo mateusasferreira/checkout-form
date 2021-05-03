@@ -4,7 +4,15 @@
 
 [![Generic badge](https://img.shields.io/badge/Status:-Ongoing-yellow.svg)](https://shields.io/)
 
-<h4 align="center">This is a registration form for e-commerce and related applications that captures the user's personal data and address using a fake json-server backend.</h5>
+<h4 align="center">This is a multiple steps registration form for e-commerces and related applications that captures and validates the user's personal data and address.</h5>
+
+### ⚙️ Functionalities
+- 4 steps registration (account creation, personal data, address data, and confirmation) 
+- Validation rules for email, password and ZIP Code (only for brazilian locations) through useContext Hook.
+- [ViaCEP API](https://viacep.com.br/) consuming for fetching location's data through ZIP Code. 
+
 
 ### 🔧 Tecnologies
-The project is being developed with [React](https://reactjs.org/) and [Material-UI](https://material-ui.com/).
+This project was created through [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html). It relies on [React](https://reactjs.org/) and [Material-UI](https://material-ui.com/).
+
+

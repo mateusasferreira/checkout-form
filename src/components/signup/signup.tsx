@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
-//import "./style.css";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
-import userEvent from "@testing-library/user-event";
 
 
 function SignUpForm() {

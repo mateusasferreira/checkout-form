@@ -41,7 +41,7 @@ export function FormContextProvider({children}: FormContextProviderProps) {
           console.log(userData)
           setStepperDisplay('none')
         }
-      })    
+      },[currentStep])    
       
     function onFormSubmit(newdata: Partial<User>) {
     setUserData({...userData, ...newdata})
