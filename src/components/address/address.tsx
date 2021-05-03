@@ -8,6 +8,7 @@ import {useValidation} from '../../contexts/validationContext'
 
 function AddressRegistration() {
   const {onFormSubmit, previousStep} = useForm()
+  const {zipValidation} = useValidation()
     
   const [street, setStreet] = useState<string>("");
   const [number, setNumber] = useState<string>("");
@@ -93,6 +94,10 @@ function AddressRegistration() {
         type="number"
         onChange={(e) => {
           setZip(e.target.value);
+        }}
+        onBlur={async () => {
+          const response = await zipValidation(zip)
+          setErrors({zip:response})  
         }}
         variant="outlined"
         label="Zip Code"
