@@ -5,16 +5,21 @@ import {useValidation} from '../../contexts/validationContext'
 
 
 function SignUpForm() {
-  const {passwordValidation, emailValidation} = useValidation()
+  const {passwordValidation, emailValidation, passwordConfirmValidation} = useValidation()
   
   const {onFormSubmit} = useForm()
   
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [discounts, setDiscounts] = useState<boolean>(true);
   const [features, setFeatures] = useState<boolean>(true);
   const [errors, setErrors] = useState({
     password: {
+      unvalid: false,
+      message: '',
+    },
+    passwordConfirm:{
       unvalid: false,
       message: '',
     },
@@ -28,7 +33,7 @@ function SignUpForm() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (errors.password.unvalid || errors.email.unvalid) return 
+        if (errors.password.unvalid || errors.email.unvalid || errors.passwordConfirm.unvalid) return 
         onFormSubmit({ email, password, discounts, features });
       }}
     >
@@ -67,6 +72,25 @@ function SignUpForm() {
         }}
         variant="outlined"
         label="Password"
+        margin="normal"
+        fullWidth
+        required
+      ></TextField>
+      <TextField
+        error={errors.passwordConfirm.unvalid}
+        type="password"
+        helperText={errors.passwordConfirm.message}
+        placeholder='e.g. Testing123'
+        onBlur={() => {          
+          setErrors(errors => ({...errors, passwordConfirm: passwordConfirmValidation(password, passwordConfirm)}));
+        }}
+        value={passwordConfirm}
+        onChange={(e) => {
+          setPasswordConfirm(e.target.value);
+        }}
+        
+        variant="outlined"
+        label="Confirm Password"
         margin="normal"
         fullWidth
         required

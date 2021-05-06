@@ -61,6 +61,7 @@ function ConfirmationStep() {
           readOnly: readMode,
         }}
         fullWidth
+        required
       />
       <TextField
         id="id"
@@ -79,6 +80,7 @@ function ConfirmationStep() {
         }}
         style={styles.normalInput}
         fullWidth
+        required
       />
       <TextField
         id="zip"
@@ -105,6 +107,7 @@ function ConfirmationStep() {
         }}
         style={styles.normalInput}
         fullWidth
+        required
       />
       <TextField
         id="street"
@@ -119,6 +122,7 @@ function ConfirmationStep() {
         }}
         style={styles.normalInput}
         fullWidth
+        required
       />
       <TextField
         id="number"
@@ -132,6 +136,7 @@ function ConfirmationStep() {
         InputProps={{
           readOnly: readMode,
         }}
+        required
       />
       <TextField
         id="city"
@@ -147,6 +152,7 @@ function ConfirmationStep() {
         style={styles.normalInput}
 
         fullWidth
+        required
       />
       <TextField
         id="district"
@@ -161,6 +167,7 @@ function ConfirmationStep() {
         }}
         style={styles.normalInput}
         fullWidth
+        required
       />      
       
       <Button 

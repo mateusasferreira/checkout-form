@@ -1,8 +1,10 @@
+import { ListItemText } from '@material-ui/core'
 import {createContext, ReactNode, useContext} from 'react'
 
 type Validation = {
-    passwordValidation: (input: string) => {unvalid: boolean, message: string},
-    emailValidation: (input: string) => {unvalid: boolean, message: string},
+    passwordValidation: (password: string) => {unvalid: boolean, message: string},
+    passwordConfirmValidation: (password: string, passwordConfirm: string) => {unvalid: boolean, message: string}
+    emailValidation: (email: string) => {unvalid: boolean, message: string},
     zipValidation: (input: string) => Promise<{
         validity: {unvalid: boolean, message: string},
         locationData: {
@@ -23,19 +25,28 @@ const ValidationContext = createContext({} as Validation)
 export function ValidationContextProvider({children}: ValidationContextProviderProps) {
     
    
-    function emailValidation (input: string) {
+    function emailValidation (email: string) {
+        if (email.length == 0) return {unvalid:false, message: ''}
         const regexValid = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-        return !regexValid.test(input) ? (
+        return !regexValid.test(email) ? (
             {unvalid:true, message: 'Please, provide a valid email account'}
         ) : ({unvalid:false, message: ''}) 
     }
     
-    function passwordValidation(input: string) {
-         const regexValid = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)   
-         return !regexValid.test(input) ? (
+    function passwordValidation(password: string) {
+        if (password.length == 0) return {unvalid:false, message: ''}
+        const regexValid = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)   
+         return !regexValid.test(password) ? (
              {unvalid:true, message: 'your password must have at least 8 characters, one uppercase letter and one number'}
              ) : ({unvalid:false, message: ''})          
         }
+
+    function passwordConfirmValidation(password:string, passwordConfirm: string) {
+        if (password.length !== 0 && passwordConfirm.length == 0) return {unvalid: true, message: 'please, confirm your password'}
+        return (password !== passwordConfirm) ? ({unvalid: true, message: 'passwords don\'t match'}) : ({unvalid: false, message: ''})
+    }
+
+    
     
     async function zipValidation(input: string) {
         try {
@@ -78,7 +89,8 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
         <ValidationContext.Provider value={{
             passwordValidation,
             emailValidation,
-            zipValidation
+            zipValidation, 
+            passwordConfirmValidation
         }}>
             {children}
         </ValidationContext.Provider>
