@@ -6,7 +6,7 @@ import {useValidation} from '../../contexts/validationContext'
 
 
 function AddressRegistration() {
-  const {onFormSubmit, previousStep, userData} = useForm()
+  const {onFormSubmit, previousStep} = useForm()
   const {zipValidation} = useValidation()
     
   const [street, setStreet] = useState<string>("");
@@ -103,7 +103,7 @@ function AddressRegistration() {
           Back
         </Button>
         <Button type="submit" color="primary" variant="contained">
-          Register
+          Next
         </Button>
         
       </form>

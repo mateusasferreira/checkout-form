@@ -7,12 +7,12 @@ import {useValidation} from '../../contexts/validationContext'
 function ConfirmationStep() {
   const { userData, onFormSubmit } = useForm();
 
-  const {zipValidation} = useValidation()
+  const {zipValidation, idNumberValidation} = useValidation()
 
   const [readMode, setReadMode] = useState<boolean>(true);
 
   const [name, setName] = useState<string>(userData.name);
-  const [id, setId] = useState<number | null>(userData.id);
+  const [id, setId] = useState<string>(userData.id);
   const [street, setStreet] = useState<string>(userData.street);
   const [city, setCity] = useState<string>(userData.city);
   const [district, setDistrict] = useState<string>(userData.district);
@@ -22,6 +22,10 @@ function ConfirmationStep() {
   const [errors, setErrors] = useState({
     zip: {
       unvalid: false, 
+      message: ''
+    },
+    idNumber: {
+      unvalid: false,
       message: ''
     }
   })
@@ -35,7 +39,7 @@ function ConfirmationStep() {
     <form action="submit"
     onSubmit={(e)=> {
       e.preventDefault();
-      if (errors.zip.unvalid) return
+      if (errors.zip.unvalid || errors.idNumber.unvalid) return
       onFormSubmit({name, id, street, number, city, district, zip})
     }}
     >
@@ -64,16 +68,18 @@ function ConfirmationStep() {
         required
       />
       <TextField
+        error={errors.idNumber.unvalid}
+        helperText={errors.idNumber.message}
         id="id"
         value={id}
         onChange={(e) => {
-          if (e.target.value.length > 0) {
-            const idNumber = parseInt(e.target.value);
-            setId(idNumber);
-          } else setId(null);
+            setId(e.target.value);
+        }}
+        onBlur={(e)=> {
+          setErrors(errors => ({...errors, idNumber: idNumberValidation(id)}))
         }}
         label="ID Number"
-        type="number"
+        type="text"
         focused={!readMode}
         InputProps={{
           readOnly: readMode,
@@ -93,7 +99,7 @@ function ConfirmationStep() {
         }}
         onBlur={async () => {
           const response = await zipValidation(zip)
-          setErrors({zip:response.validity}) 
+          setErrors(errors => ({...errors, zip:response.validity})) 
           if(response.locationData) {
             setCity(response.locationData.city)
             setStreet(response.locationData.street)

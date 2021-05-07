@@ -8,7 +8,7 @@
 
 ### ⚙️ Functionalities
 - 4 steps registration (account creation, personal data, address data, and confirmation) 
-- Validation rules for email, password and ZIP Code (only for brazilian locations) through useContext Hook.
+- Validation rules for email, password, ID Number (only for brazilian ones), and ZIP Code (only for brazilian locations) through useContext Hook.
 - [ViaCEP API](https://viacep.com.br/) consuming for fetching location's data through ZIP Code. 
 
 

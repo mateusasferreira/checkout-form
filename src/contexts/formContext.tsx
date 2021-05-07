@@ -7,7 +7,7 @@ type User = {
     features: boolean;
     discounts: boolean;
     name: string;
-    id: number | null;
+    id: string;
     street: string;
     number: string; 
     city: string;

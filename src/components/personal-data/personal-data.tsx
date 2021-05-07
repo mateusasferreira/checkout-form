@@ -1,11 +1,24 @@
 import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
+import {useValidation} from '../../contexts/validationContext'
+
 
 function PersonalData() {
   const { onFormSubmit, userData } = useForm();
+
+  const {idNumberValidation} = useValidation()
+
   const [name, setName] = useState<string>(userData.name);
-  const [id, setId] = useState<number | null>(userData.id);
+  const [id, setId] = useState<string>(userData.id);
+
+  const [errors, setErrors] = useState({
+    idNumber: {
+      unvalid: false,
+      message: ''
+    }
+  })
+
 
   return (
     <form
@@ -13,6 +26,7 @@ function PersonalData() {
       action="submit"
       onSubmit={(e) => {
         e.preventDefault();
+        if (errors.idNumber.unvalid) return
         onFormSubmit({ name, id });
       }}
     >
@@ -29,14 +43,18 @@ function PersonalData() {
         required
       ></TextField>
       <TextField
+        error={errors.idNumber.unvalid}
+        helperText={errors.idNumber.message}
         value={id}
         onChange={(e) => {
-          const idNumber = parseInt(e.target.value);
-          setId(idNumber);
+          setId(e.target.value);
+        }}
+        onBlur={()=>{
+          setErrors(errors => ({...errors, idNumber: idNumberValidation(id)}))
         }}
         variant="outlined"
-        type="number"
-        label="ID Number"
+        type="text"
+        label="ID Number (CPF)"
         margin="normal"
         fullWidth
         required
