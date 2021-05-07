@@ -4,7 +4,7 @@
 
 [![Generic badge](https://img.shields.io/badge/Status:-Ongoing-yellow.svg)](https://shields.io/)
 
-<h4 align="center">This is a multiple steps registration form for e-commerces and related applications that captures and validates the user's personal data and address.</h5>
+<h4 align="center">This is a multi-steps registration form for e-commerces and related applications that captures and validates the user's personal data and address.</h5>
 
 ### ⚙️ Functionalities
 - 4 steps registration (account creation, personal data, address data, and confirmation) 
