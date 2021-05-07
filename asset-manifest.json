@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/checkout-form/static/css/main.bf1b56d0.chunk.css",
-    "main.js": "/checkout-form/static/js/main.d0ff5c48.chunk.js",
-    "main.js.map": "/checkout-form/static/js/main.d0ff5c48.chunk.js.map",
+    "main.js": "/checkout-form/static/js/main.557b48dc.chunk.js",
+    "main.js.map": "/checkout-form/static/js/main.557b48dc.chunk.js.map",
     "runtime-main.js": "/checkout-form/static/js/runtime-main.570ee5da.js",
     "runtime-main.js.map": "/checkout-form/static/js/runtime-main.570ee5da.js.map",
     "static/css/2.3191df75.chunk.css": "/checkout-form/static/css/2.3191df75.chunk.css",
-    "static/js/2.1cfe4bc6.chunk.js": "/checkout-form/static/js/2.1cfe4bc6.chunk.js",
-    "static/js/2.1cfe4bc6.chunk.js.map": "/checkout-form/static/js/2.1cfe4bc6.chunk.js.map",
+    "static/js/2.6fc6faaa.chunk.js": "/checkout-form/static/js/2.6fc6faaa.chunk.js",
+    "static/js/2.6fc6faaa.chunk.js.map": "/checkout-form/static/js/2.6fc6faaa.chunk.js.map",
     "index.html": "/checkout-form/index.html",
     "static/css/2.3191df75.chunk.css.map": "/checkout-form/static/css/2.3191df75.chunk.css.map",
     "static/css/main.bf1b56d0.chunk.css.map": "/checkout-form/static/css/main.bf1b56d0.chunk.css.map",
-    "static/js/2.1cfe4bc6.chunk.js.LICENSE.txt": "/checkout-form/static/js/2.1cfe4bc6.chunk.js.LICENSE.txt",
+    "static/js/2.6fc6faaa.chunk.js.LICENSE.txt": "/checkout-form/static/js/2.6fc6faaa.chunk.js.LICENSE.txt",
     "static/media/index.css": "/checkout-form/static/media/roboto-vietnamese-400-normal.52cebac0.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.570ee5da.js",
     "static/css/2.3191df75.chunk.css",
-    "static/js/2.1cfe4bc6.chunk.js",
+    "static/js/2.6fc6faaa.chunk.js",
     "static/css/main.bf1b56d0.chunk.css",
-    "static/js/main.d0ff5c48.chunk.js"
+    "static/js/main.557b48dc.chunk.js"
   ]
 }
