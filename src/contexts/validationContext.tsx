@@ -94,7 +94,7 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
 
     function phoneValidation(phone: string, country:any) {
         
-        return (isPossiblePhoneNumber(phone, country) && isValidPhoneNumber(phone, country)) ? ({invalid: false, message: ''}) : ({invalid: true, message: 'invalid'})
+        return (isPossiblePhoneNumber(phone, country) && isValidPhoneNumber(phone, country)) ? ({invalid: false, message: ''}) : ({invalid: true, message: 'Invalid phone number'})
         
          
     }

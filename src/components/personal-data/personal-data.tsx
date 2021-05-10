@@ -15,7 +15,7 @@ function PersonalData() {
   const [id, setId] = useState<string>(userData.id);
   const [phone, setPhone] = useState<string>(userData.phone)
 
-  const [country, setCountry] = useState<any>('BR')
+  const [country, setCountry] = useState<any>(userData.country || 'BR')
   const countryList = getCountries()
 
   const [errors, setErrors] = useState({
