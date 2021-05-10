@@ -6,7 +6,7 @@ type Validation = {
     passwordConfirmValidation: (password: string, passwordConfirm: string) => {invalid: boolean, message: string}
     emailValidation: (email: string) => {invalid: boolean, message: string},
     idNumberValidation: (idNumber: string) => {invalid: boolean, message: string},
-    phoneValidation: (phone: string) => {invalid: boolean, message: string},
+    phoneValidation: (phone: string, country: any) => {invalid: boolean, message: string},
     zipValidation: (input: string) => Promise<{
         validity: {invalid: boolean, message: string},
         locationData: {
@@ -92,9 +92,9 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
         return (itsValid == true) ? ({invalid:false, message: ''}) : ({invalid: true, message: 'Invalid ID Number. Only brazilian ID numbers (CPFs) are accepted. Get a CPF for testing at https://www.4devs.com.br/gerador_de_cpf'})
     }
 
-    function phoneValidation(phone: string) {
+    function phoneValidation(phone: string, country:any) {
         
-        return (isPossiblePhoneNumber(phone) && isValidPhoneNumber(phone)) ? ({invalid: false, message: ''}) : ({invalid: true, message: 'invalid'})
+        return (isPossiblePhoneNumber(phone, country) && isValidPhoneNumber(phone, country)) ? ({invalid: false, message: ''}) : ({invalid: true, message: 'invalid'})
         
          
     }

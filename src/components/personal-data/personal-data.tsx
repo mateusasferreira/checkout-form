@@ -1,17 +1,22 @@
-import { useState } from "react";
-import { TextField, Button } from "@material-ui/core";
+import { useState, useRef } from "react";
+import { TextField, Button, MenuItem } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
-import { AsYouType } from 'libphonenumber-js'
+import { AsYouType, getCountries } from 'libphonenumber-js'
+
 
 function PersonalData() {
   const { onFormSubmit, userData } = useForm();
+
 
   const {idNumberValidation, phoneValidation} = useValidation()
 
   const [name, setName] = useState<string>(userData.name);
   const [id, setId] = useState<string>(userData.id);
   const [phone, setPhone] = useState<string>(userData.phone)
+
+  const [country, setCountry] = useState<any>('BR')
+  const countryList = getCountries()
 
   const [errors, setErrors] = useState({
     idNumber: {
@@ -31,9 +36,11 @@ function PersonalData() {
       action="submit"
       onSubmit={(e) => {
         e.preventDefault();
-        if (errors.idNumber.invalid) return
+        if (errors.idNumber.invalid || errors.idNumber.invalid) return
         onFormSubmit({ name, id });
       }}
+      noValidate
+      
     >
       <TextField
         value={name}
@@ -64,24 +71,44 @@ function PersonalData() {
         fullWidth
         required
       ></TextField>
+
+      <TextField
+        id="standard-select-currency"
+        select
+        variant="outlined"
+        margin="normal"
+        value={country}
+        onChange={(e)=>{
+          setCountry(e.target.value)
+        }}
+        style={styles.countrySelect}
+      >
+        {countryList.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+
       <TextField
         error={errors.phoneNumber.invalid}
         helperText={errors.phoneNumber.message}
         value={phone}
         onChange={(e) => {
-          let phone = new AsYouType().input(e.target.value)
+          let phone = new AsYouType(country).input(e.target.value)
           setPhone(phone);
         }}
         onBlur={()=>{
-          setErrors(errors => ({...errors, phoneNumber: phoneValidation(phone)}))
+          setErrors(errors => ({...errors, phoneNumber: phoneValidation(phone, country)}))
         }}
         label="Phone Number"
-        placeholder="format: +00 00 00000000"
+        placeholder=""
         type="tel"
         variant="outlined"
         margin="normal"
         fullWidth
         required
+        style={styles.phoneSelect}
       ></TextField>  
       
       <Button type="submit" color="primary" variant="contained">
@@ -89,6 +116,16 @@ function PersonalData() {
       </Button>
     </form>
   );
+}
+
+const styles = { 
+  countrySelect: {
+    marginRight: '.25rem',
+    width: 'calc(15% - 1rem)'
+  },
+  phoneSelect: {
+    width: '85%'
+  }
 }
 
 export default PersonalData;
