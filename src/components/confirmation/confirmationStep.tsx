@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
+import {AsYouType} from 'libphonenumber-js'
 
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
@@ -7,7 +8,7 @@ import {useValidation} from '../../contexts/validationContext'
 function ConfirmationStep() {
   const { userData, onFormSubmit } = useForm();
 
-  const {zipValidation, idNumberValidation} = useValidation()
+  const {zipValidation, idNumberValidation, phoneValidation} = useValidation()
 
   const [readMode, setReadMode] = useState<boolean>(true);
 
@@ -18,8 +19,7 @@ function ConfirmationStep() {
   const [district, setDistrict] = useState<string>(userData.district);
   const [number, setNumber] = useState<string>(userData.number);
   const [zip, setZip] = useState<string>(userData.zip);
-  const [phone, setPhone] = useState<string>(userData.phone)
-
+  const [phone, setPhone] = useState(userData.phone)
 
   const [errors, setErrors] = useState({
     zip: {
@@ -45,7 +45,7 @@ function ConfirmationStep() {
     <form action="submit"
     onSubmit={(e)=> {
       e.preventDefault();
-      if (errors.zip.invalid || errors.idNumber.invalid) return
+      if (errors.zip.invalid || errors.idNumber.invalid || errors.phoneNumber.invalid) return
       onFormSubmit({name, id, street, number, city, district, zip})
     }}
     >
@@ -99,15 +99,15 @@ function ConfirmationStep() {
         helperText={errors.phoneNumber.message}
         value={phone}
         onChange={(e) => {
-          setPhone(e.target.value);
+          const phone = new AsYouType(userData.country).input(e.target.value)
+          setPhone(phone);
         }}
-        // onBlur={()=>{
-        //   setErrors(errors => ({...errors, phoneNumber: idNumberValidation(id)}))
-        // }}
+        onBlur={()=>{
+          setErrors(errors => ({...errors, phoneNumber: phoneValidation(phone, userData.country)}))
+        }}
         label="Phone Number"
         type="tel"
-        variant="outlined"
-        margin="normal"
+        style={styles.normalInput}
         fullWidth
         required
       ></TextField> 
@@ -203,7 +203,7 @@ function ConfirmationStep() {
       variant="contained"
       type="submit"
       color="primary" 
-      
+      style={styles.button}
       >
         Confirm and Submit
       </Button>
@@ -215,12 +215,15 @@ const styles = {
   nameInput: {
     marginBottom: '1rem',
     marginTop: '1rem',
-    width: '50%',
+    width: '75%',
     display: 'block'
   },
   normalInput: {
     marginBottom: '1rem',
     width: '50%'
+  },
+  button: {
+    display: 'block'
   }
 
 }

@@ -37,7 +37,7 @@ function PersonalData() {
       onSubmit={(e) => {
         e.preventDefault();
         if (errors.idNumber.invalid || errors.idNumber.invalid) return
-        onFormSubmit({ name, id });
+        onFormSubmit({ name, id, phone, country });
       }}
       noValidate
       
@@ -95,7 +95,7 @@ function PersonalData() {
         helperText={errors.phoneNumber.message}
         value={phone}
         onChange={(e) => {
-          let phone = new AsYouType(country).input(e.target.value)
+          const phone = new AsYouType(country).input(e.target.value)
           setPhone(phone);
         }}
         onBlur={()=>{

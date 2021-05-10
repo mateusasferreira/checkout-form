@@ -9,11 +9,12 @@ type User = {
     name: string;
     id: string;
     phone: string;
+    country: any;
+    zip: string 
     street: string;
     number: string; 
     city: string;
     district: string;
-    zip: string 
 }
 
 type FormContextData = {
