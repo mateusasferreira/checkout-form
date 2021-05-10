@@ -1,18 +1,20 @@
 import {createContext, ReactNode, useContext} from 'react'
+import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js'
 
 type Validation = {
-    passwordValidation: (password: string) => {unvalid: boolean, message: string},
-    passwordConfirmValidation: (password: string, passwordConfirm: string) => {unvalid: boolean, message: string}
-    emailValidation: (email: string) => {unvalid: boolean, message: string},
-    idNumberValidation: (idNumber: string) => {unvalid: boolean, message: string},
+    passwordValidation: (password: string) => {invalid: boolean, message: string},
+    passwordConfirmValidation: (password: string, passwordConfirm: string) => {invalid: boolean, message: string}
+    emailValidation: (email: string) => {invalid: boolean, message: string},
+    idNumberValidation: (idNumber: string) => {invalid: boolean, message: string},
+    phoneValidation: (phone: string) => {invalid: boolean, message: string},
     zipValidation: (input: string) => Promise<{
-        validity: {unvalid: boolean, message: string},
+        validity: {invalid: boolean, message: string},
         locationData: {
             city: string
             street: string
             district: string
         } | null
-    }>
+    }> 
 }
 
 
@@ -26,24 +28,24 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
     
    
     function emailValidation (email: string) {
-        if (email.length == 0) return {unvalid:false, message: ''}
+        if (email.length == 0) return {invalid:false, message: ''}
         const regexValid = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
         return !regexValid.test(email) ? (
-            {unvalid:true, message: 'Please, provide a valid email account'}
-        ) : ({unvalid:false, message: ''}) 
+            {invalid:true, message: 'Please, provide a valid email account'}
+        ) : ({invalid:false, message: ''}) 
     }
     
     function passwordValidation(password: string) {
-        if (password.length == 0) return {unvalid:false, message: ''}
+        if (password.length == 0) return {invalid:false, message: ''}
         const regexValid = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)   
          return !regexValid.test(password) ? (
-             {unvalid:true, message: 'your password must have at least 8 characters, one uppercase letter and one number'}
-             ) : ({unvalid:false, message: ''})          
-        }
+             {invalid:true, message: 'your password must have at least 8 characters, one uppercase letter and one number'}
+             ) : ({invalid:false, message: ''})          
+    }
 
     function passwordConfirmValidation(password:string, passwordConfirm: string) {
-        if (password.length !== 0 && passwordConfirm.length == 0) return {unvalid: true, message: 'please, confirm your password'}
-        return (password !== passwordConfirm) ? ({unvalid: true, message: 'passwords don\'t match'}) : ({unvalid: false, message: ''})
+        if (password.length !== 0 && passwordConfirm.length == 0) return {invalid: true, message: 'please, confirm your password'}
+        return (password !== passwordConfirm) ? ({invalid: true, message: 'passwords don\'t match'}) : ({invalid: false, message: ''})
     }
 
     function idNumberValidation(idNumber: string) {
@@ -87,7 +89,14 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
     
         if(checkDigit2 !== parseInt(cpf.substring(10, 11))) itsValid = false
     
-        return (itsValid == true) ? ({unvalid:false, message: ''}) : ({unvalid: true, message: 'Invalid ID Number. Only brazilian ID numbers (CPFs) are accepted. Get a CPF for testing at https://www.4devs.com.br/gerador_de_cpf'})
+        return (itsValid == true) ? ({invalid:false, message: ''}) : ({invalid: true, message: 'Invalid ID Number. Only brazilian ID numbers (CPFs) are accepted. Get a CPF for testing at https://www.4devs.com.br/gerador_de_cpf'})
+    }
+
+    function phoneValidation(phone: string) {
+        
+        return (isPossiblePhoneNumber(phone) && isValidPhoneNumber(phone)) ? ({invalid: false, message: ''}) : ({invalid: true, message: 'invalid'})
+        
+         
     }
     
     async function zipValidation(input: string) {
@@ -104,12 +113,12 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
             const data:any = await response.json()
             if(data.erro) {
                 return {
-                    validity: {unvalid: true, message: 'Inexisting ZIP Code (for testing, try: 01001-001)'},
+                    validity: {invalid: true, message: 'Inexisting ZIP Code (for testing, try: 01001-001)'},
                     locationData: null
                 }
             } 
             return {
-                validity: {unvalid: false, message: ''},
+                validity: {invalid: false, message: ''},
                 locationData: {
                     city: data.localidade,
                     street: data.logradouro,
@@ -119,10 +128,16 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
 
         } catch (err) {
             console.log(err)
+            if(err instanceof TypeError) {
+                return {
+                    validity: {invalid: true, message: 'Invalid ZIP Code format (for testing, try: 01001-001)'},
+                    locationData: null
+                }          
+            }            
             return {
-                validity: {unvalid: true, message: 'Invalid ZIP code format (for testing, try: 01001-001)'},
+                validity: {invalid: true, message: 'Failed to validate ZIP Code, try again later'},
                 locationData: null
-            }
+            }    
         }           
     }
            
@@ -133,6 +148,7 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
             passwordValidation,
             passwordConfirmValidation,
             idNumberValidation,
+            phoneValidation,
             zipValidation, 
         }}>
             {children}

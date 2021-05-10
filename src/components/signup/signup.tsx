@@ -16,15 +16,15 @@ function SignUpForm() {
   const [features, setFeatures] = useState<boolean>(true);
   const [errors, setErrors] = useState({
     password: {
-      unvalid: false,
+      invalid: false,
       message: '',
     },
     passwordConfirm:{
-      unvalid: false,
+      invalid: false,
       message: '',
     },
     email: {
-      unvalid: false,
+      invalid: false,
       message: "",
     },
   });
@@ -33,14 +33,14 @@ function SignUpForm() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (errors.password.unvalid || errors.email.unvalid || errors.passwordConfirm.unvalid) return 
+        if (errors.password.invalid || errors.email.invalid || errors.passwordConfirm.invalid) return 
         onFormSubmit({ email, password, discounts, features });
       }}
     >
       
       <TextField
         value={email}
-        error={errors.email.unvalid}
+        error={errors.email.invalid}
         helperText={errors.email.message}
         placeholder='user@email.com'
         onChange={(e) => {
@@ -56,7 +56,7 @@ function SignUpForm() {
         required
       ></TextField>
       <TextField
-        error={errors.password.unvalid}
+        error={errors.password.invalid}
         type="password"
         helperText={errors.password.message}
         placeholder='e.g. Testing123'
@@ -64,7 +64,7 @@ function SignUpForm() {
           setErrors(errors => ({...errors, password: passwordValidation(password)}));
         }}
         onFocus={()=>{
-          setErrors(errors => ({...errors, password:{unvalid:false, message: 'Disclaimer: this is just a prototype for testing, do not provide real passwords. Try something like \'Testing123\'.'}}))
+          setErrors(errors => ({...errors, password:{invalid:false, message: 'Disclaimer: this is just a prototype for testing, do not provide real passwords. Try something like \'Testing123\'.'}}))
         }}
         value={password}
         onChange={(e) => {
@@ -77,7 +77,7 @@ function SignUpForm() {
         required
       ></TextField>
       <TextField
-        error={errors.passwordConfirm.unvalid}
+        error={errors.passwordConfirm.invalid}
         type="password"
         helperText={errors.passwordConfirm.message}
         placeholder='e.g. Testing123'

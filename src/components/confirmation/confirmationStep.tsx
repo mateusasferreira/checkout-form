@@ -18,14 +18,20 @@ function ConfirmationStep() {
   const [district, setDistrict] = useState<string>(userData.district);
   const [number, setNumber] = useState<string>(userData.number);
   const [zip, setZip] = useState<string>(userData.zip);
+  const [phone, setPhone] = useState<string>(userData.phone)
+
 
   const [errors, setErrors] = useState({
     zip: {
-      unvalid: false, 
+      invalid: false, 
       message: ''
     },
     idNumber: {
-      unvalid: false,
+      invalid: false,
+      message: ''
+    },
+    phoneNumber: {
+      invalid: false,
       message: ''
     }
   })
@@ -39,7 +45,7 @@ function ConfirmationStep() {
     <form action="submit"
     onSubmit={(e)=> {
       e.preventDefault();
-      if (errors.zip.unvalid || errors.idNumber.unvalid) return
+      if (errors.zip.invalid || errors.idNumber.invalid) return
       onFormSubmit({name, id, street, number, city, district, zip})
     }}
     >
@@ -68,7 +74,7 @@ function ConfirmationStep() {
         required
       />
       <TextField
-        error={errors.idNumber.unvalid}
+        error={errors.idNumber.invalid}
         helperText={errors.idNumber.message}
         id="id"
         value={id}
@@ -89,8 +95,25 @@ function ConfirmationStep() {
         required
       />
       <TextField
+        error={errors.phoneNumber.invalid}
+        helperText={errors.phoneNumber.message}
+        value={phone}
+        onChange={(e) => {
+          setPhone(e.target.value);
+        }}
+        // onBlur={()=>{
+        //   setErrors(errors => ({...errors, phoneNumber: idNumberValidation(id)}))
+        // }}
+        label="Phone Number"
+        type="tel"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        required
+      ></TextField> 
+      <TextField
         id="zip"
-        error={errors.zip.unvalid}
+        error={errors.zip.invalid}
         helperText={errors.zip.message}
         value={zip}
         type="text"

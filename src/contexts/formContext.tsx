@@ -8,6 +8,7 @@ type User = {
     discounts: boolean;
     name: string;
     id: string;
+    phone: string;
     street: string;
     number: string; 
     city: string;

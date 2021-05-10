@@ -17,9 +17,9 @@ function AddressRegistration() {
 
   const [errors, setErrors] = useState({
     zip: {
-      unvalid: false, 
+      invalid: false, 
       message: ''
-    }
+    } 
   })
 
   return (
@@ -29,11 +29,11 @@ function AddressRegistration() {
         action="submit" 
         onSubmit={(e) => {
         e.preventDefault()
-        if (errors.zip.unvalid) return
+        if (errors.zip.invalid) return
         onFormSubmit({street, number, city, district, zip})}}>
         <TextField
           value={zip}
-          error={errors.zip.unvalid}
+          error={errors.zip.invalid}
           helperText={errors.zip.message}
           type="text"
           onChange={(e) => {

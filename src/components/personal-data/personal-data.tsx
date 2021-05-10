@@ -2,19 +2,24 @@ import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
-
+import { AsYouType } from 'libphonenumber-js'
 
 function PersonalData() {
   const { onFormSubmit, userData } = useForm();
 
-  const {idNumberValidation} = useValidation()
+  const {idNumberValidation, phoneValidation} = useValidation()
 
   const [name, setName] = useState<string>(userData.name);
   const [id, setId] = useState<string>(userData.id);
+  const [phone, setPhone] = useState<string>(userData.phone)
 
   const [errors, setErrors] = useState({
     idNumber: {
-      unvalid: false,
+      invalid: false,
+      message: ''
+    },
+    phoneNumber: {
+      invalid: false,
       message: ''
     }
   })
@@ -26,7 +31,7 @@ function PersonalData() {
       action="submit"
       onSubmit={(e) => {
         e.preventDefault();
-        if (errors.idNumber.unvalid) return
+        if (errors.idNumber.invalid) return
         onFormSubmit({ name, id });
       }}
     >
@@ -43,7 +48,7 @@ function PersonalData() {
         required
       ></TextField>
       <TextField
-        error={errors.idNumber.unvalid}
+        error={errors.idNumber.invalid}
         helperText={errors.idNumber.message}
         value={id}
         onChange={(e) => {
@@ -59,6 +64,26 @@ function PersonalData() {
         fullWidth
         required
       ></TextField>
+      <TextField
+        error={errors.phoneNumber.invalid}
+        helperText={errors.phoneNumber.message}
+        value={phone}
+        onChange={(e) => {
+          let phone = new AsYouType().input(e.target.value)
+          setPhone(phone);
+        }}
+        onBlur={()=>{
+          setErrors(errors => ({...errors, phoneNumber: phoneValidation(phone)}))
+        }}
+        label="Phone Number"
+        placeholder="format: +00 00 00000000"
+        type="tel"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        required
+      ></TextField>  
+      
       <Button type="submit" color="primary" variant="contained">
         Next
       </Button>
