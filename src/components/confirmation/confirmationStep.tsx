@@ -1,14 +1,34 @@
 import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import {AsYouType} from 'libphonenumber-js'
+import {makeStyles} from '@material-ui/core/styles'
 
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
 
+const useStyles = makeStyles({
+  nameInput: {
+    marginBottom: '1rem',
+    marginTop: '1rem',
+    width: '75%',
+    display: 'block'
+  },
+  normalInput: {
+    marginBottom: '1rem',
+    width: '50%'
+  },
+  button: {
+    display: 'block'
+  }
+})
+
+
 function ConfirmationStep() {
   const { userData, onFormSubmit } = useForm();
 
-  const {zipValidation, idNumberValidation, phoneValidation} = useValidation()
+  const {nameValidation, zipValidation, idNumberValidation, phoneValidation} = useValidation()
+
+  const classes = useStyles()
 
   const [readMode, setReadMode] = useState<boolean>(true);
 
@@ -22,6 +42,10 @@ function ConfirmationStep() {
   const [phone, setPhone] = useState(userData.phone)
 
   const [errors, setErrors] = useState({
+    name:{
+      invalid: false,
+      message: ''
+    },
     zip: {
       invalid: false, 
       message: ''
@@ -45,13 +69,14 @@ function ConfirmationStep() {
     <form action="submit"
     onSubmit={(e)=> {
       e.preventDefault();
-      if (errors.zip.invalid || errors.idNumber.invalid || errors.phoneNumber.invalid) return
+      if (errors.zip.invalid || errors.idNumber.invalid || errors.phoneNumber.invalid || errors.name.invalid) return
       onFormSubmit({name, id, street, number, city, district, zip})
     }}
     >
       <Button 
       variant="outlined" 
       color="primary" 
+      className={classes.button}
       onClick={toggleReadMode}
       >
         {readMode ? 'Edit Data' : 'Done' }
@@ -63,10 +88,15 @@ function ConfirmationStep() {
         onChange={(e) => {
           setName(e.target.value);
         }}
+        error={errors.name.invalid}
+        helperText={errors.name.message}
+        onBlur={()=>{
+          setErrors(errors => ({...errors, name: nameValidation(name)}))
+        }}
         label="Name"
         focused={!readMode}
         defaultValue={name}
-        style={styles.nameInput}
+        className={classes.nameInput}
         InputProps={{
           readOnly: readMode,
         }}
@@ -90,7 +120,7 @@ function ConfirmationStep() {
         InputProps={{
           readOnly: readMode,
         }}
-        style={styles.normalInput}
+        className={classes.normalInput}
         fullWidth
         required
       />
@@ -107,7 +137,8 @@ function ConfirmationStep() {
         }}
         label="Phone Number"
         type="tel"
-        style={styles.normalInput}
+        focused={!readMode}
+        className={classes.normalInput}
         fullWidth
         required
       ></TextField> 
@@ -134,7 +165,7 @@ function ConfirmationStep() {
         InputProps={{
           readOnly: readMode,
         }}
-        style={styles.normalInput}
+        className={classes.normalInput}
         fullWidth
         required
       />
@@ -149,7 +180,7 @@ function ConfirmationStep() {
         InputProps={{
           readOnly: readMode,
         }}
-        style={styles.normalInput}
+        className={classes.normalInput}
         fullWidth
         required
       />
@@ -161,7 +192,7 @@ function ConfirmationStep() {
         }}
         label="Number"
         focused={!readMode}
-        style={styles.normalInput}
+        className={classes.normalInput}
         InputProps={{
           readOnly: readMode,
         }}
@@ -178,7 +209,7 @@ function ConfirmationStep() {
         InputProps={{
           readOnly: readMode,
         }}
-        style={styles.normalInput}
+        className={classes.normalInput}
 
         fullWidth
         required
@@ -194,7 +225,7 @@ function ConfirmationStep() {
         InputProps={{
           readOnly: readMode,
         }}
-        style={styles.normalInput}
+        className={classes.normalInput}
         fullWidth
         required
       />      
@@ -203,7 +234,7 @@ function ConfirmationStep() {
       variant="contained"
       type="submit"
       color="primary" 
-      style={styles.button}
+      className={classes.button}
       >
         Confirm and Submit
       </Button>
@@ -211,21 +242,6 @@ function ConfirmationStep() {
   );
 }
 
-const styles = {
-  nameInput: {
-    marginBottom: '1rem',
-    marginTop: '1rem',
-    width: '75%',
-    display: 'block'
-  },
-  normalInput: {
-    marginBottom: '1rem',
-    width: '50%'
-  },
-  button: {
-    display: 'block'
-  }
 
-}
 
 export default ConfirmationStep;

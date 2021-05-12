@@ -3,15 +3,21 @@ import { useForm } from "../../contexts/formContext";
 import { steps } from "../../steps-array/steps";
 import { ValidationContextProvider } from "../../contexts/validationContext";
 
+const styles = {
+  stepper: {
+    width: '100%',
+    padding: '2rem 0'
+  }
+}
+
 export function CheckoutForm() {
   const { currentStep, stepperDisplay  } = useForm();
-
-  
+ 
 
   return (
     <ValidationContextProvider>
       <Box display={stepperDisplay}>
-        <Stepper activeStep={currentStep}>
+        <Stepper activeStep={currentStep} alternativeLabel style={styles.stepper}>
           <Step>
             <StepLabel>Signup</StepLabel>
           </Step>
@@ -22,7 +28,7 @@ export function CheckoutForm() {
             <StepLabel>Address</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Confirmation</StepLabel>
+            <StepLabel>Confirm</StepLabel>
           </Step>
         </Stepper>
       </Box>

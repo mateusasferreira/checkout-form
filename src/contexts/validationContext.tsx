@@ -5,6 +5,7 @@ type Validation = {
     passwordValidation: (password: string) => {invalid: boolean, message: string},
     passwordConfirmValidation: (password: string, passwordConfirm: string) => {invalid: boolean, message: string}
     emailValidation: (email: string) => {invalid: boolean, message: string},
+    nameValidation: (name: string) => {invalid: boolean, message: string},
     idNumberValidation: (idNumber: string) => {invalid: boolean, message: string},
     phoneValidation: (phone: string, country: any) => {invalid: boolean, message: string},
     zipValidation: (input: string) => Promise<{
@@ -46,6 +47,10 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
     function passwordConfirmValidation(password:string, passwordConfirm: string) {
         if (password.length !== 0 && passwordConfirm.length == 0) return {invalid: true, message: 'please, confirm your password'}
         return (password !== passwordConfirm) ? ({invalid: true, message: 'passwords don\'t match'}) : ({invalid: false, message: ''})
+    }
+
+    function nameValidation(name: string){
+        return (name.length < 4) ? ({invalid: true, message: 'Please, inform your full name'}) : ({invalid: false, message: ''})
     }
 
     function idNumberValidation(idNumber: string) {
@@ -147,6 +152,7 @@ export function ValidationContextProvider({children}: ValidationContextProviderP
             emailValidation,
             passwordValidation,
             passwordConfirmValidation,
+            nameValidation,
             idNumberValidation,
             phoneValidation,
             zipValidation, 

@@ -1,7 +1,14 @@
 import { useState } from "react";
+import {makeStyles} from '@material-ui/core/styles'
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
+
+const useStyles = makeStyles({
+  button: {
+    float: 'right'
+  }
+})
 
 
 function SignUpForm() {
@@ -9,6 +16,8 @@ function SignUpForm() {
   
   const {onFormSubmit} = useForm()
   
+  const classes = useStyles()
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
@@ -49,7 +58,8 @@ function SignUpForm() {
         onBlur={()=> {
           setErrors(errors => ({...errors, email: emailValidation(email)}));
         }}
-        variant="outlined"
+        variant="filled"
+        size="small"
         label="Email"
         margin="normal"
         fullWidth
@@ -70,9 +80,10 @@ function SignUpForm() {
         onChange={(e) => {
           setPassword(e.target.value);
         }}
-        variant="outlined"
         label="Password"
+        variant="filled"
         margin="normal"
+        size="small"
         fullWidth
         required
       ></TextField>
@@ -89,8 +100,9 @@ function SignUpForm() {
           setPasswordConfirm(e.target.value);
         }}
         
-        variant="outlined"
         label="Confirm Password"
+        variant="filled"
+        size="small"
         margin="normal"
         fullWidth
         required
@@ -122,7 +134,7 @@ function SignUpForm() {
         }
       />
 
-      <Button type="submit" color="primary" variant="contained">
+      <Button className={classes.button} type="submit" color="primary" variant="contained">
         Sign Up
       </Button>
     </form>

@@ -1,14 +1,43 @@
 import {TextField, Button} from "@material-ui/core";
+import {makeStyles} from '@material-ui/core/styles'
+
 import { useState } from "react";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
  
-
+const useStyle = makeStyles({
+  shortLeftInput: {
+    marginRight: '.5rem',
+    marginBottom: '1rem',
+    width: 'calc(50% - 1rem)',
+  },
+  shortRightInput: {
+    marginBottom: '1rem',
+    width: '50%'
+  },
+  longLeftInput: {
+    marginRight: '.5rem',
+    marginBottom: '1rem',
+    width: 'calc(75% - .5rem)',
+  },
+  extraShortRightInput: {
+    marginBottom: '1rem',
+    width: '25%'
+  },
+  previousButton: {
+   float: 'left' 
+  },
+  nextButton: {
+    float: 'right'
+  }
+})
 
 function AddressRegistration() {
   const {onFormSubmit, previousStep} = useForm()
   const {zipValidation} = useValidation()
     
+  const classes = useStyle()
+
   const [street, setStreet] = useState<string>("");
   const [number, setNumber] = useState<string>('');
   const [city, setCity] = useState<string>('');
@@ -48,9 +77,10 @@ function AddressRegistration() {
               setDistrict(response.locationData.district)
             }
           }}
-          variant="outlined"
+          variant="filled"
+          size="small"
           label="Zip Code" 
-          style={styles.shortLeftInput}   
+          className={classes.shortLeftInput}   
           required
         ></TextField>
         
@@ -60,9 +90,10 @@ function AddressRegistration() {
           onChange={(e) => {
             setStreet(e.target.value);
           }}
-          variant="outlined"
+          variant="filled"
+          size="small"
           label="Street"
-          style={styles.longLeftInput}
+          className={classes.longLeftInput}
           required
         ></TextField>
         <TextField
@@ -71,9 +102,10 @@ function AddressRegistration() {
           onChange={(e) => {
             setNumber(e.target.value);
           }}
-          variant="outlined"
+          variant="filled"
+          size="small"
           label="Number"
-          style={styles.extraShortRightInput}
+          className={classes.extraShortRightInput}
           required
         ></TextField>
         
@@ -83,9 +115,10 @@ function AddressRegistration() {
           onChange={(e) => {
             setCity(e.target.value);
           }}
-          variant="outlined"
+          variant="filled"
+          size="small"
           label="City"
-          style={styles.shortLeftInput}
+          className={classes.shortLeftInput}
           required
         ></TextField>
         <TextField
@@ -94,15 +127,16 @@ function AddressRegistration() {
           onChange={(e) => {
             setDistrict(e.target.value);
           }}
-          variant="outlined"
+          variant="filled"
+          size="small"
           label="District"
           required
-          style={styles.shortRightInput}
+          className={classes.shortRightInput}
         ></TextField>
-        <Button onClick={previousStep} style={styles.button} color="primary" variant="contained">
+        <Button onClick={previousStep} className={classes.previousButton} color="primary" variant="contained">
           Back
         </Button>
-        <Button type="submit" color="primary" variant="contained">
+        <Button type="submit" className={classes.nextButton} color="primary" variant="contained">
           Next
         </Button>
         
@@ -113,28 +147,6 @@ function AddressRegistration() {
   );
 }
 
-const styles = {
-  shortLeftInput: {
-    marginRight: '1rem',
-    marginBottom: '1rem',
-    width: 'calc(50% - 1rem)',
-  },
-  shortRightInput: {
-    marginBottom: '1rem',
-    width: '50%'
-  },
-  longLeftInput: {
-    marginRight: '1rem',
-    marginBottom: '1rem',
-    width: 'calc(75% - 1rem)',
-  },
-  extraShortRightInput: {
-    marginBottom: '1rem',
-    width: '25%'
-  },
-  button: {
-   marginRight: '1rem' 
-  }
-}
+
 
 export default AddressRegistration;

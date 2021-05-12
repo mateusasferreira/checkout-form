@@ -1,15 +1,30 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
+import {makeStyles} from '@material-ui/core/styles'
+
 import { TextField, Button, MenuItem } from "@material-ui/core";
 import { useForm } from "../../contexts/formContext";
 import {useValidation} from '../../contexts/validationContext'
 import { AsYouType, getCountries } from 'libphonenumber-js'
 
+const useStyles = makeStyles({ 
+  countrySelect: {
+    marginRight: '.25rem',
+    width: 'calc(20% - .25rem)'
+  },
+  phoneSelect: {
+    width: '80%'
+  },
+  button: {
+    float: 'right'
+  }
+})
 
 function PersonalData() {
   const { onFormSubmit, userData } = useForm();
 
+  const {nameValidation, idNumberValidation, phoneValidation} = useValidation()
 
-  const {idNumberValidation, phoneValidation} = useValidation()
+  const classes = useStyles()
 
   const [name, setName] = useState<string>(userData.name);
   const [id, setId] = useState<string>(userData.id);
@@ -19,6 +34,10 @@ function PersonalData() {
   const countryList = getCountries()
 
   const [errors, setErrors] = useState({
+    name:{
+      invalid: false,
+      message: ''
+    },
     idNumber: {
       invalid: false,
       message: ''
@@ -36,7 +55,7 @@ function PersonalData() {
       action="submit"
       onSubmit={(e) => {
         e.preventDefault();
-        if (errors.idNumber.invalid || errors.idNumber.invalid) return
+        if (errors.idNumber.invalid || errors.idNumber.invalid || errors.name.invalid) return
         onFormSubmit({ name, id, phone, country });
       }}
       noValidate
@@ -44,11 +63,17 @@ function PersonalData() {
     >
       <TextField
         value={name}
+        error={errors.name.invalid}
+        helperText={errors.name.message}
+        onBlur={(e)=>{
+          setErrors(errors => ({...errors, name: nameValidation(name || e.target.value)}))
+        }}
         onChange={(e) => {
           setName(e.target.value);
         }}
         placeholder='Name Surname'
-        variant="outlined"
+        variant="filled"
+        size="small"
         label="Full Name"
         margin="normal"
         fullWidth
@@ -61,10 +86,12 @@ function PersonalData() {
         onChange={(e) => {
           setId(e.target.value);
         }}
-        onBlur={()=>{
+        onBlur={(e)=>{
+          if(e.target.value.length === 0) return
           setErrors(errors => ({...errors, idNumber: idNumberValidation(id)}))
         }}
-        variant="outlined"
+        variant="filled"
+        size="small"
         type="text"
         label="ID Number (CPF)"
         margin="normal"
@@ -75,13 +102,14 @@ function PersonalData() {
       <TextField
         id="standard-select-currency"
         select
-        variant="outlined"
+        variant="filled"
+        size="small"
         margin="normal"
         value={country}
         onChange={(e)=>{
           setCountry(e.target.value)
         }}
-        style={styles.countrySelect}
+        className={classes.countrySelect}
       >
         {countryList.map((option) => (
           <MenuItem key={option} value={option}>
@@ -98,34 +126,28 @@ function PersonalData() {
           const phone = new AsYouType(country).input(e.target.value)
           setPhone(phone);
         }}
-        onBlur={()=>{
+        onBlur={(e)=>{
+          if(e.target.value.length === 0) return
           setErrors(errors => ({...errors, phoneNumber: phoneValidation(phone, country)}))
         }}
         label="Phone Number"
         placeholder=""
         type="tel"
-        variant="outlined"
+        variant="filled"
+        size="small"
         margin="normal"
         fullWidth
         required
-        style={styles.phoneSelect}
+        className={classes.phoneSelect}
       ></TextField>  
       
-      <Button type="submit" color="primary" variant="contained">
+      <Button className={classes.button} type="submit" color="primary" variant="contained">
         Next
       </Button>
     </form>
   );
 }
 
-const styles = { 
-  countrySelect: {
-    marginRight: '.25rem',
-    width: 'calc(15% - 1rem)'
-  },
-  phoneSelect: {
-    width: '85%'
-  }
-}
+
 
 export default PersonalData;
