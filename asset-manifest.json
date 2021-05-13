@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/checkout-form/static/css/main.5c02196e.chunk.css",
-    "main.js": "/checkout-form/static/js/main.a7571743.chunk.js",
-    "main.js.map": "/checkout-form/static/js/main.a7571743.chunk.js.map",
+    "main.js": "/checkout-form/static/js/main.fc12323b.chunk.js",
+    "main.js.map": "/checkout-form/static/js/main.fc12323b.chunk.js.map",
     "runtime-main.js": "/checkout-form/static/js/runtime-main.570ee5da.js",
     "runtime-main.js.map": "/checkout-form/static/js/runtime-main.570ee5da.js.map",
     "static/css/2.3191df75.chunk.css": "/checkout-form/static/css/2.3191df75.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.3191df75.chunk.css",
     "static/js/2.367a54a3.chunk.js",
     "static/css/main.5c02196e.chunk.css",
-    "static/js/main.a7571743.chunk.js"
+    "static/js/main.fc12323b.chunk.js"
   ]
 }
