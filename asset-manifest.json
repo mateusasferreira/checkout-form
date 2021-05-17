@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/checkout-form/static/css/main.5c02196e.chunk.css",
+    "main.css": "/checkout-form/static/css/main.1ceaf62c.chunk.css",
     "main.js": "/checkout-form/static/js/main.fc12323b.chunk.js",
     "main.js.map": "/checkout-form/static/js/main.fc12323b.chunk.js.map",
     "runtime-main.js": "/checkout-form/static/js/runtime-main.570ee5da.js",
@@ -10,7 +10,7 @@
     "static/js/2.367a54a3.chunk.js.map": "/checkout-form/static/js/2.367a54a3.chunk.js.map",
     "index.html": "/checkout-form/index.html",
     "static/css/2.3191df75.chunk.css.map": "/checkout-form/static/css/2.3191df75.chunk.css.map",
-    "static/css/main.5c02196e.chunk.css.map": "/checkout-form/static/css/main.5c02196e.chunk.css.map",
+    "static/css/main.1ceaf62c.chunk.css.map": "/checkout-form/static/css/main.1ceaf62c.chunk.css.map",
     "static/js/2.367a54a3.chunk.js.LICENSE.txt": "/checkout-form/static/js/2.367a54a3.chunk.js.LICENSE.txt",
     "static/media/index.css": "/checkout-form/static/media/roboto-vietnamese-400-normal.52cebac0.woff2"
   },
@@ -18,7 +18,7 @@
     "static/js/runtime-main.570ee5da.js",
     "static/css/2.3191df75.chunk.css",
     "static/js/2.367a54a3.chunk.js",
-    "static/css/main.5c02196e.chunk.css",
+    "static/css/main.1ceaf62c.chunk.css",
     "static/js/main.fc12323b.chunk.js"
   ]
 }
