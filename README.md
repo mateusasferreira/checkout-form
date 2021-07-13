@@ -2,7 +2,7 @@
    Registration/Checkout Form
 </h1>
 
-[![Generic badge](https://img.shields.io/badge/Status:-Ongoing-yellow.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/Status:-Concluded-green.svg)](https://shields.io/)
 
 <h4 align="center">This is a multi-steps registration form for e-commerces and related applications that captures and validates the user's personal data and address.</h5>
 
